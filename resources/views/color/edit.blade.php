@@ -1,6 +1,8 @@
 @extends("master")
 @section("title","Color Page")
 @section("content")
+    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
     <div class="content">
         <div class="container-fluid">
             <div class="row">

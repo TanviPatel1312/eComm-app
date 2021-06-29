@@ -8,7 +8,10 @@
                 <div class="col-md-8">
 
                     <div class="card">
-
+                        <div class="pull-center">
+                            <a class="btn btn-primary pull-center text-light"  href="{{ route('user.index') }}"> back
+                            </a><br><br>
+                        </div>
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Create Profile</h4>
                             <p class="card-category">Complete your profile</p>

@@ -1,21 +1,18 @@
 @extends("master")
-@section("title","Color Page")
+@section("title","AboutUs Page")
 @section("content")
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="pull-right">
-                            <a class="btn btn-primary pull-right text-light"  href="{{ route('color.create') }}"> Create New color
+                            <a class="btn btn-primary pull-right text-light"  href="{{ route('aboutus.create') }}"> Add details
                             </a>
                         </div>
                         <br>
-
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Color Table</h4>
+                            <h4 class="card-title ">AboutUs page Detail</h4>
                             <p class="card-category"> Here is a subtitle for this table</p>
                         </div>
                         <div class="card-body">
@@ -26,18 +23,23 @@
                                         ID
                                     </th>
                                     <th>
-                                        color
+                                        images
+                                    </th>
+                                    <th>
+                                        Description
                                     </th>
                                     <th width="280px">Action</th>
                                     </thead>
-                                    @foreach($color as $c)
+                                    @foreach($aboutus as $a)
                                         <tr>
                                             <td>{{++$i}}</td>
-                                            <td>{{$c->color}}</td>
+                                            <td><img src="{{('/aboutuimg/'.$a->img)}}" class="rounded-circle" height="100px" width="80px"></td>
+                                            <td>{{$a->description}}</td>
+
                                             <td>
-                                                <form action="{{route('color.destroy',$c->id)}}" method="POST">
+                                                <form action="{{route('aboutus.destroy',$a->id)}}" method="POST">
                                                     <button class="btn btn-primary">
-                                                        <a href="{{route('color.edit',$c->id)}}" class="text-white" title="show">
+                                                        <a href="{{route('aboutus.edit',$a->id)}}" class="text-white" title="show">
                                                             Edit</a>
                                                     </button>
 

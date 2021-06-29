@@ -36,8 +36,8 @@
                                             <td>{{$s->size}}</td>
                                             <td>
                                                 <form action="{{route('size.destroy',$s->id)}}" method="POST">
-                                                    <button class="btn btn-success">
-                                                        <a href="{{route('size.edit',$s->id)}}" title="show">
+                                                    <button class="btn btn-primary">
+                                                        <a href="{{route('size.edit',$s->id)}}" class="text-white" title="show">
                                                             Edit</a>
                                                     </button>
 
@@ -48,9 +48,9 @@
                                                         Delete
                                                     </button>
 
-{{--                                                <a class="btn btn-primary" href="{{route('size.edit',$s->id)}}">Edit</a>--}}
+{{--                                                <a class="btn btn-primary" href="{{routes('size.edit',$s->id)}}">Edit</a>--}}
 
-{{--                                                <a class="btn btn-primary" href="{{route('size.destroy',$s->id)}}">Delete</a>--}}
+{{--                                                <a class="btn btn-primary" href="{{routes('size.destroy',$s->id)}}">Delete</a>--}}
                                                 </form>
                                             </td>
 

@@ -1,5 +1,5 @@
 @extends("master")
-@section("title","Color Page")
+@section("title","ContactUs Page")
 @section("content")
     <div class="content">
         <div class="container-fluid">
@@ -8,14 +8,11 @@
 
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="pull-right">
-                            <a class="btn btn-primary pull-right text-light"  href="{{ route('color.create') }}"> Create New color
-                            </a>
-                        </div>
+
                         <br>
 
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Color Table</h4>
+                            <h4 class="card-title ">ContactUs Details</h4>
                             <p class="card-category"> Here is a subtitle for this table</p>
                         </div>
                         <div class="card-body">
@@ -26,20 +23,30 @@
                                         ID
                                     </th>
                                     <th>
-                                        color
+                                        Name
+                                    </th>
+                                    <th>
+                                        E-mail
+                                    </th>
+                                    <th>
+                                        ContactNo
+                                    </th>
+                                    <th>
+                                        Message
                                     </th>
                                     <th width="280px">Action</th>
                                     </thead>
-                                    @foreach($color as $c)
+                                    @foreach($contactus as $c)
                                         <tr>
                                             <td>{{++$i}}</td>
-                                            <td>{{$c->color}}</td>
+                                            <td>{{$c->name}}</td>
+                                            <td>{{$c->email}}</td>
+                                            <td>{{$c->contactNo}}</td>
+                                            <td>{{$c->message}}</td>
+
                                             <td>
-                                                <form action="{{route('color.destroy',$c->id)}}" method="POST">
-                                                    <button class="btn btn-primary">
-                                                        <a href="{{route('color.edit',$c->id)}}" class="text-white" title="show">
-                                                            Edit</a>
-                                                    </button>
+                                                <form action="{{route('conatctus.destroy',$c->id)}}" method="POST">
+
 
                                                     @csrf
                                                     @method('DELETE')
@@ -47,6 +54,10 @@
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
                                                         Delete
                                                     </button>
+
+                                                    {{--                                                <a class="btn btn-primary" href="{{routes('size.edit',$s->id)}}">Edit</a>--}}
+
+                                                    {{--                                                <a class="btn btn-primary" href="{{routes('size.destroy',$s->id)}}">Delete</a>--}}
                                                 </form>
                                             </td>
 

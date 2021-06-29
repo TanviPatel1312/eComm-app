@@ -4,8 +4,6 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="pull-right">
@@ -64,8 +62,8 @@
                                             <td>{{$u->postal_code}}</td>
                                             <td>
                                                 <form action="{{route('user.destroy',$u->id)}}" method="POST">
-                                                    <button class="btn btn-success">
-                                                        <a href="{{route('user.edit',$u->id)}}" title="show">
+                                                    <button class="btn btn-primary">
+                                                        <a href="{{route('user.edit',$u->id)}}" class="text-white" title="show">
                                                             Edit</a>
                                                     </button>
 
@@ -76,8 +74,8 @@
                                                         Delete
                                                     </button>
                                                 </form>
-{{--                                                <a class="btn btn-primary" href="{{route('user.edit',$u->id)}}">Edit</a>--}}
-{{--                                                <a class="btn btn-danger" href="{{route('user.destroy',$u->id)}}">Delete</a>--}}
+{{--                                                <a class="btn btn-primary" href="{{routes('user.edit',$u->id)}}">Edit</a>--}}
+{{--                                                <a class="btn btn-danger" href="{{routes('user.destroy',$u->id)}}">Delete</a>--}}
                                             </td>
 
                                         </tr>

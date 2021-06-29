@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\ProductImages;
 use App\Models\Size;
+use Faker\Core\File;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
 
@@ -18,9 +22,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product= Product::latest()->paginate(5);
-        return view('product.index',compact('product'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $products = Product::all();
+        return response()->json(['data'=>$products]);
+        return Product::all();
+
+//        $product= Product::latest()->paginate(5);
+//        return view('product.index',compact('product'))
+//            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -30,11 +38,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $size = Size::all();
-        $color = Color::all();
-
-        return view('product.create',compact('size','color'));
-
+       $category =  Category::all();
+        return view('product.create',compact('category'));
     }
 
     /**
@@ -45,40 +50,52 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'product_name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'product_img' => 'required',
-            'qty' => 'required',
-            'size_id'=> 'required',
-            'color_id'=> 'required'
-        ]);
+//        $request->validate([
+//            'product_name' => 'required',
+//            'description' => 'required',
+//            'slug' => 'required|unique:products,slug,' . $request->post('id'),
+//        ]);
+//
+//        // Movie::create($request->all());
+//
+//        $product=new Product();
+//        $product->category_id=$request->get('category');
+//        $product->product_name=$request->get('product_name');
+//        $product->description=$request->get('description');
+//        $product->slug=$request->get('slug');
+//
+//        $product->save();
+//        $product->categories()->sync($request->category);
+//        return redirect()->routes('product.index')
+//            ->with('success', 'product created successfully.');
+        if($request->hasFile("cover")){
+            $file=$request->file("cover");
+            $imagesName=time().'_'.$file->getClientOriginalName();
+            $file->move(\public_path("cover/"),$imagesName);
+            $product= new Product([
+                "category_id"=>$request->category,
+                "product_name"=>$request->product_name,
+                "description"=>$request->description,
+                "slug"=>$request->slug,
+                "cover"=>$imagesName,
+            ]);
+            $product->save();
+            $product->categories()->sync($request->category);
 
-        // Movie::create($request->all());
-        $file=$request->file('product_img');
-        if($file->isvalid())
-        {
-            $destinationpath='productimg/';
-            $image=date('ymdHis').'.'.$file->getClientOriginalExtension();
-            $file->move($destinationpath,$image);
         }
-        $product=new Product();
-        $product->product_name=$request->get('product_name');
-        $product->description=$request->get('description');
-        $product->price=$request->get('price');
-        $product->qty=$request->get('qty');
-        $product->size_id=$request->get('size_id');
-        $product->color_id=$request->get('color_id');
-        $product->product_img=$image;
-        $product->save();
-        Product::create($request->all());
-
+        if($request->hasFile("product_image")){
+            $files=$request->file("product_image");
+            foreach ($files as $file){
+                $imagesName=time().'_'.$file->getClientOriginalName();
+                $request['product_id']=$product->id;
+                $request['product_img']=$imagesName;
+                $file->move(\public_path("/images"),$imagesName);
+                ProductImages::create($request->all());
+            }
+        }
         return redirect()->route('product.index')
             ->with('success', 'product created successfully.');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -99,8 +116,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('product.edit', compact('product'));
-
+            $product = Product::with('categories')->where('id',$product->id)->first();
+            $category = Category::all();
+            //$product=Product::findOrFail($product);
+            return view('product.edit', compact('category','product'));
     }
 
     /**
@@ -110,34 +129,54 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request,$id)
     {
-        $request->validate([
-            'product_name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'product_img' => 'required',
-            'qty' => 'required',
-            'size_id'=> 'required',
-            'color_id'=> 'required'
-        ]);
-        // $movie->update($request->all());
-        $product=Product::find($product);
-        $file=$request->file('movie_img');
-        if($file->isvalid())
-        {
-            $destinationpath='movieimg/';
-            $image=date('ymdHis').'.'.$file->getClientOriginalExtension();
-            $file->move($destinationpath,$image);
+//        $request->validate([
+//
+//            'category_id'=>'required',
+//            'product_name' => 'required',
+//            'description' => 'required',
+//            'slug'=>'required'
+//
+//
+//        ]);
+//
+//        // $movie->update($request->all());
+//        $product=Product::find($product);
+//        $product->category_id=$request->get('category');
+//        $product->product_name=$request->get('product_name');
+//        $product->description=$request->get('description');
+//        $product->slug=$request->get('slug');
+//        $product->categories()->sync($request->category);
+//        $product->save();
+
+        $product=Product::findOrFail($id);
+        if($request->hasFile("cover")){
+            if(File::exists("cover/".$product->cover)){
+                File::delete("cover/".$product->cover);
+            }
+            $file=$request->file("cover");
+            $product->cover=time()."_".$file->getClientOriginalName();
+            $file->move(\public_path("/cover"),$product->cover);
+            $request['cover']=$product->cover;
         }
-        $product->product_name=$request->get('product_name');
-        $product->description=$request->get('description');
-        $product->price=$request->get('price');
-        $product->qty=$request->get('qty');
-        $product->size_id=$request->get('size_id');
-        $product->color_id=$request->get('color_id');
-        $product->product_img=$image;
-        $product->save();
+        $product->update([
+            "category_id"=>$request->category,
+            "product_name"=>$request->product_name,
+            "description"=>$request->description,
+            "slug"=>$request->slug,
+            "cover"=>$product->cover,
+        ]);
+        if($request->hasFile("product_image")){
+            $files=$request->file("product_image");
+            foreach ($files as $file){
+                $imagesName=time().'_'.$file->getClientOriginalName();
+                $request['product_id']=$id;
+                $request['product_img']=$imagesName;
+                $file->move(\public_path("images"),$imagesName);
+                ProductImages::create($request->all());
+            }
+        }
         return redirect()->route('product.index')
             ->with('success', 'product updated successfully');
     }
@@ -150,9 +189,27 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-        return redirect()->route('product.index')
-            ->with('success', 'product deleted successfully');
+//        $product->delete();
+//        return redirect()->route('product.index')
+//            ->with('success', 'product deleted successfully');
+        $products=Product::findOrFail($product);
+        if(File::exitsts("cover/".$products->cover)){
+            File::delete("cover/".$products->cover);
+        }
+        $images=Image::where("product_id",$products->id)->get();
+        foreach ($images as $image){
+            if(File::exitsts("images/".$image->image)){
+                File::delete("images/".$image->image);
+            }
+    }
+        $products->delete();
+        return back();
+    }
+    public function getProduct()
+    {
+        $data = Product::get();
+
+        return response()->json($data);
     }
 
 }

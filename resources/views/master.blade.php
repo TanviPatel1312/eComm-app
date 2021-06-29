@@ -28,6 +28,10 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="../assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <link href="{{ ('css/app.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('/js/jquery.js') }}" type="text/javascript"></script>
+    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
 </head>
 
 <body class="">
@@ -56,7 +60,7 @@ The above copyright notice and this permission notice shall be included in all c
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/product">
+                    <a class="nav-link" href="product">
                         <i class="material-icons">Product</i>
                         <p>Product</p>
                     </a>
@@ -76,20 +80,34 @@ The above copyright notice and this permission notice shall be included in all c
 
                 <li class="nav-item ">
                     <a class="nav-link" href="category">
-                        <i class="material-icons">Category </i>
+                        <i class="material-icons">Category</i>
                         <p>Category </p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="logout">
-                        <i class="material-icons">Logout</i>
-                        <p>logout</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="subcategory">
+                        <i class="material-icons">Subcategory</i>
+                        <p>SubCategory</p>
                     </a>
                 </li>
-
-
-
-
+                <li class="nav-item">
+                    <a class="nav-link" href="aboutus">
+                        <i class="material-icons">About</i>
+                        <p>AboutPage</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contactus">
+                        <i class="material-icons">Contact</i>
+                        <p>ContactUs</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="productDetail">
+                        <i class="material-icons">Productdetail</i>
+                        <p>ProductDetail</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -245,6 +263,17 @@ The above copyright notice and this permission notice shall be included in all c
 <script src="../assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/demo/demo.js"></script>
+<script src="{{asset('js/app.js')}}" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $().ready(function() {

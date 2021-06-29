@@ -36,8 +36,8 @@
                                     <td>{{$c->category_name}}</td>
                                         <td>
                                             <form action="{{route('category.destroy',$c->id)}}" method="POST">
-                                                <button class="btn btn-success">
-                                                    <a href="{{route('category.edit',$c->id)}}" title="show">
+                                                <button class="btn btn-primary">
+                                                    <a href="{{route('category.edit',$c->id)}}" class="text-white" title="show">
                                                         Edit</a>
                                                 </button>
 

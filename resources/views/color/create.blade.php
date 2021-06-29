@@ -4,12 +4,10 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
-
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="pull-left">
-                            <a class="btn btn-primary pull-left text-light"  href="{{ route('color.index') }}"> back
+                        <div class="pull-center">
+                            <a class="btn btn-primary pull-center text-light"  href="{{ route('color.index') }}"> back
                             </a>
                         </div>
                         <br>
